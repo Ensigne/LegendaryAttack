@@ -1,8 +1,5 @@
 # Kütüphaneler
 
-from rich.console import Console
-from rich.text import Text
-from rich.theme import Theme
 from pyfiglet import Figlet
 from time import sleep
 from colorama import Fore, Back, Style
@@ -14,7 +11,6 @@ from requests.cookies import RequestsCookieJar
 
 
 # Sınıf
-tema = Theme({"basari": "purple", "hata": "bold red"})
 console = Console(theme=tema)
 font = Figlet(font='epic')
 
