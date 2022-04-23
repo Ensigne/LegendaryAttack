@@ -4,9 +4,10 @@ from time import sleep
 from colorama import Fore, Back, Style
 from sys import stdout
 from os import system, name
-import os, threading, requests, datetime, time, socket, ssl, random
+import os, threading, requests, cloudscraper, datetime, time, socket, socks, ssl, random
 from urllib.parse import urlparse
 from requests.cookies import RequestsCookieJar
+import undetected_chromedriver as webdriver
 
 # Header
 
