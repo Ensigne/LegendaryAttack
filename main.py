@@ -1,5 +1,6 @@
 # Kütüphaneler
 
+from os import system, name
 from time import sleep
 from colorama import Fore, Back, Style
 from sys import stdout
