@@ -1,6 +1,5 @@
 # Kütüphaneler
 
-from pyfiglet import Figlet
 from time import sleep
 from colorama import Fore, Back, Style
 from sys import stdout
@@ -12,7 +11,6 @@ from requests.cookies import RequestsCookieJar
 
 # Sınıf
 console = Console(theme=tema)
-font = Figlet(font='epic')
 
 
 # Header
