@@ -8,11 +8,6 @@ import os, threading, requests, datetime, time, socket, ssl, random
 from urllib.parse import urlparse
 from requests.cookies import RequestsCookieJar
 
-
-# Sınıf
-console = Console(theme=tema)
-
-
 # Header
 
 def header(): 
