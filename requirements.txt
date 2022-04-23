@@ -1,3 +1,2 @@
-rich
 colorama
 undetected_chromedriver
