@@ -64,6 +64,9 @@ def komut():
         timer.start()
         Socketİsleyis(target, thread, t)
         timer.join()
+    # Geliştiriciler
+    elif komut == "gelistiriciler":
+        gelistirici()
 
 
 # Komut İşlem
