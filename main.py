@@ -26,11 +26,12 @@ def header():
 
 sleep(1)
 
-print(header)
+# print(header)
 # Komutlar
 
 
 def komut():
+    header()
     stdout.write(Fore.LIGHTCYAN_EX+"╔═══"+Fore.LIGHTCYAN_EX+"[""root"+Fore.LIGHTGREEN_EX+"@"+Fore.LIGHTCYAN_EX+"Ensigne"+Fore.CYAN+"]"+Fore.LIGHTCYAN_EX+"\n╚══\x1b[38;2;0;255;189m> "+Fore.WHITE)
     komut = input()
     clear()
