@@ -82,7 +82,7 @@ def yardim():
     stdout.write("\x1b[38;2;0;236;250m╔══════════════════════════════════════════════╗\n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "socket = Socket saldırısı yapar.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "yardim = Komutları ve açıklamalarını gösterir.  \n")
-    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "gelistirici = Geliştiricileri gösterir.  \n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "gelistiriciler = Geliştiricileri gösterir.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.RED   + "cikis" + Fore.WHITE + " = Tooldan çıkış yapar.   \n")
     stdout.write("\x1b[38;2;0;236;250m╚══════════════════════════════════════════════╝\n")
     stdout.write("\n")
