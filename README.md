@@ -4,7 +4,15 @@ Yapım aşamasındadır.
 
 # Kurulum
 
-pip3 install -r requirements.txt
+git clone https://github.com/Ensigne/LegendaryAttack/
+
+cd LegendaryAttack
+
+pip3 install -r kurulum.txt
+
+# Çalıştırma
+
+python3 main.py
 
 # Emeği Geçen
 
