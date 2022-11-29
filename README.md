@@ -16,4 +16,4 @@ python3 main.py
 
 # Emeği Geçen
 
-Discord: Yağız#3953
+Discord: Ensigne#5867
