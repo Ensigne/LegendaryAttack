@@ -87,7 +87,7 @@ def komut():
 
 def gelistirici():
     stdout.write("\x1b[38;2;0;236;250m╔══════════════════════════════════════════════╗\n")
-    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "Yağız | Discord:  Yağız#3953  \n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "Ensigne | Discord:  Ensigne#5867  \n")
     stdout.write("\x1b[38;2;0;236;250m╚══════════════════════════════════════════════╝\n")
     stdout.write("\n")
 
@@ -101,8 +101,8 @@ def clear():
 # Yardım
 def yardim():
     stdout.write("\x1b[38;2;0;236;250m╔══════════════════════════════════════════════╗\n")
-    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfsoc = UAM, CAPTCHA, BFM bypasslar. (socket) \n")
-    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfreq = UAM, CAPTCHA, BFM bypasslar. (request) \n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfsoc = UAM, CAPTCHA, BFM bypasslar. (socket yapımda) \n")
+    stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "cfreq = UAM, CAPTCHA, BFM bypasslar. (request yapımda) \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "socket = Socket saldırısı yapar.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "yardim = Komutları ve açıklamalarını gösterir.  \n")
     stdout.write("\x1b[38;2;255;20;147m• "+Fore.LIGHTWHITE_EX   + "gelistiriciler = Geliştiricileri gösterir.  \n")
